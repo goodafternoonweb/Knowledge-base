@@ -37,11 +37,14 @@ def index():
 @app.route('/get_response', methods=['POST'])
 def get_response():
     user_input = request.form.get('user_input')
+    print(f"Received input: {user_input}")  # Debugging log
     if not user_input:
         return jsonify({"error": "No input provided"}), 400
     
     response = chatbot_response(user_input)
+    print(f"Response: {response}")  # Debugging log
     return jsonify({"response": response})
+
 
 if __name__ == '__main__':
     app.run(debug=True)
