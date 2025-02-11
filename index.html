@@ -60,11 +60,12 @@
         const chatWindow = document.getElementById('chat-window');
         chatWindow.innerHTML += `<p><strong>You:</strong> ${userInput}</p>`;
 
-        fetch('/get_response', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' }, // JSON format
-            body: JSON.stringify({ user_input: userInput }) // Send as JSON
-        })
+        fetch('/get_response', {  // ✅ Make sure this matches Flask route
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' }, // Use JSON format
+    body: JSON.stringify({ user_input: userInput }) // Send input
+})
+
         .then(response => {
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
