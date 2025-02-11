@@ -6,6 +6,9 @@ from dotenv import load_dotenv
 
 # Load environment variables
 load_dotenv()
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 5000))  # Railway assigns PORT dynamically
+    app.run(debug=True, host="0.0.0.0", port=port)
 
 app = Flask(__name__)
 CORS(app)  # Enable CORS for all routes
@@ -45,7 +48,7 @@ def get_response():
     response = chatbot_response(user_input)
     return jsonify({"response": response})
 
-if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000))  # Default to 5000
-    app.run(debug=True, host="0.0.0.0", port=port)
+if __name__ == '__main__':
+    app.run(debug=True)
+
 
