@@ -7,6 +7,13 @@ from dotenv import load_dotenv
 load_dotenv()
 
 app = Flask(__name__)
+import google.generativeai as genai
+genai.configure(api_key="YOUR_API_KEY")
+
+model = genai.GenerativeModel("gemini-pro")
+response = model.generate_content("Hello")
+print(response.text)
+
 
 # Set up Gemini API
 API_KEY = os.getenv("AIzaSyCY3ME1xdj5q1_-m7umKHG1OJh2e8Nmie0")
