@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, jsonify
+from flask_cors import CORS  # Import CORS
 import google.generativeai as genai
 import os
 from dotenv import load_dotenv
@@ -7,13 +8,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 app = Flask(__name__)
-import google.generativeai as genai
-genai.configure(api_key="YOUR_API_KEY")
-
-model = genai.GenerativeModel("gemini-pro")
-response = model.generate_content("Hello")
-print(response.text)
-
+CORS(app)  # Enable CORS for all routes
 
 # Set up Gemini API
 API_KEY = os.getenv("AIzaSyCY3ME1xdj5q1_-m7umKHG1OJh2e8Nmie0")
@@ -36,15 +31,12 @@ def index():
 
 @app.route('/get_response', methods=['POST'])
 def get_response():
-    user_input = request.form.get('user_input')
-    print(f"Received input: {user_input}")  # Debugging log
+    user_input = request.json.get('user_input')  # Use JSON instead of form
     if not user_input:
         return jsonify({"error": "No input provided"}), 400
     
     response = chatbot_response(user_input)
-    print(f"Response: {response}")  # Debugging log
     return jsonify({"response": response})
 
-
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)  # Make it accessible
