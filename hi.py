@@ -31,9 +31,10 @@ def index():
 
 @app.route('/get_response', methods=['POST'])
 def get_response():
-    user_input = request.json.get('user_input')  # Use JSON instead of form
-    if not user_input:
-        return jsonify({"error": "No input provided"}), 400
+    user_input = request.json.get('user_input')  # Use request.json instead of request.form
+    response = chatbot_response(user_input)
+    return jsonify({"response": response})
+
     
     response = chatbot_response(user_input)
     return jsonify({"response": response})
