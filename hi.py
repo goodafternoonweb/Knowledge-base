@@ -31,9 +31,11 @@ def index():
 
 @app.route('/get_response', methods=['POST'])
 def get_response():
-    user_input = request.json.get('user_input')  # Use request.json instead of request.form
+    data = request.get_json()  # Ensure Flask reads JSON data
+    user_input = data.get('user_input', '')  # Extract input
     response = chatbot_response(user_input)
     return jsonify({"response": response})
+
 
     
     response = chatbot_response(user_input)
